@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tvylab.sandbox.SandboxSpace">
+   <children>
+      <VBox fx:id="menuBox" maxWidth="-Infinity" prefHeight="400.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onBackPressed" prefWidth="164.0" text="ZPĚT" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+            <ComboBox fx:id="pins" focusTraversable="false" prefWidth="150.0" promptText="IO" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+      <Pane fx:id="sandboxPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="544.0" HBox.hgrow="ALWAYS" />
+   </children>
+</HBox>

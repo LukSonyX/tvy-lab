@@ -9,4 +9,7 @@ public class LearningSpace {
     // Logic for adding new lesson
 
     public void onBackPressed() throws IOException { Launcher.changeScene("main-menu.fxml"); }
+
+    public void firstLesson() {}
+    public void secondLesson() {}
 }
