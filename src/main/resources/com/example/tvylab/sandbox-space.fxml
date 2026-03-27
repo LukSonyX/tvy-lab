@@ -4,17 +4,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tvylab.sandbox.SandboxSpace">
-   <children>
-      <VBox fx:id="menuBox" maxWidth="-Infinity" prefHeight="400.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
+<SplitPane dividerPositions="0.2" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tvylab.sandbox.SandboxSpace">
+   <items>
+      <VBox fx:id="menuBox" maxWidth="-Infinity" prefHeight="400.0" prefWidth="250.0">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#onBackPressed" prefWidth="164.0" text="ZPĚT" VBox.vgrow="ALWAYS">
+            <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBackPressed" prefWidth="164.0" text="ZPĚT" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="13.0" />
-               </font></Button>
-            <ComboBox fx:id="pins" focusTraversable="false" prefWidth="150.0" promptText="IO" VBox.vgrow="ALWAYS" />
+               </font>
+            </Button>
+            <ComboBox fx:id="pins" focusTraversable="false" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="IO" VBox.vgrow="ALWAYS" />
+            <ComboBox fx:id="gates" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="GATES" VBox.vgrow="ALWAYS" />
+            <Region disable="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <CheckBox fx:id="deleteToggle" mnemonicParsing="false" text="Delete" />
          </children>
       </VBox>
-      <Pane fx:id="sandboxPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="544.0" HBox.hgrow="ALWAYS" />
-   </children>
-</HBox>
+      <Pane fx:id="sandboxPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="398.0" prefWidth="314.0" />
+   </items>
+</SplitPane>

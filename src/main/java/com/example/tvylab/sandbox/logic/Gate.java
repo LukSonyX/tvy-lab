@@ -5,10 +5,23 @@ import java.util.List;
 
 public abstract class Gate {
     public String name;
-    protected List<Pin> inputPins = new ArrayList<>();
-    protected List<Pin> outputPins;
+    protected ArrayList<Pin> inputPins = new ArrayList<>();
+    protected ArrayList<Pin> outputPins = new ArrayList<>();
 
     public Gate() {
+    }
+
+    protected void setupPins(int inCount, int outCount) {
+        for (int i = 0; i < inCount; i++) {
+            Pin p = new Pin(false);
+            p.setParentGate(this);
+            inputPins.add(p);
+        }
+        for (int i = 0; i < outCount; i++) {
+            Pin p = new Pin(false);
+            p.setParentGate(this);
+            outputPins.add(p);
+        }
     }
 
     protected abstract void compute();

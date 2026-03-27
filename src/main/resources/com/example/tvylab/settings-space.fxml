@@ -1,21 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <Label text="Settings" />
-   </children>
-</GridPane>
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tvylab.SettingsController">
+
+    <!-- TOP -->
+    <top>
+        <StackPane>
+            <Button onAction="#onBackPressed" text="BACK" StackPane.alignment="TOP_LEFT">
+                <StackPane.margin>
+                    <Insets left="10" top="10" />
+                </StackPane.margin>
+            </Button>
+
+            <Label text="Settings" StackPane.alignment="TOP_CENTER">
+                <StackPane.margin>
+                    <Insets top="10" />
+                </StackPane.margin>
+                <font>
+                    <Font name="System Bold" size="21" />
+                </font>
+            </Label>
+        </StackPane>
+    </top>
+
+    <!-- CONTENT -->
+    <center>
+        <VBox alignment="CENTER" prefHeight="405.0" prefWidth="600.0" spacing="20">
+            <padding>
+                <Insets left="20" right="20" top="40" />
+            </padding>
+
+            <!-- Lessons -->
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="NEVER" />
+                    <ColumnConstraints hgrow="ALWAYS" />
+                    <ColumnConstraints hgrow="NEVER" />
+                </columnConstraints>
+
+                <Label text="Lessons dir:" GridPane.columnIndex="0" />
+
+                <TextField fx:id="lessonsField" maxWidth="Infinity" GridPane.columnIndex="1" />
+
+                <Button text="Browse" GridPane.columnIndex="2" />
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+
+            <!-- Gates -->
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="NEVER" />
+                    <ColumnConstraints hgrow="ALWAYS" />
+                    <ColumnConstraints hgrow="NEVER" />
+                </columnConstraints>
+
+                <Label text="Gates dir:" GridPane.columnIndex="0" />
+
+                <TextField maxWidth="Infinity" GridPane.columnIndex="1" />
+
+                <Button text="Browse" GridPane.columnIndex="2" />
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+
+        </VBox>
+    </center>
+
+</BorderPane>

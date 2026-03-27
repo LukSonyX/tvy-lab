@@ -1,10 +1,10 @@
 .root {
-    -fx-font-size: 24pt;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 
 .sandbox {
-    -fx-font-size: 0.6em;
+    -fx-font-size: 0.65em;
 }
 
 .combo-box-popup .scroll-bar:vertical,
@@ -13,5 +13,9 @@
 }
 
 .root .button {
-    -fx-font-size: 1em;
+    -fx-font-size: 0.9em;
+}
+
+.label {
+    -fx-font-size: 1.1em;
 }

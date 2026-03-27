@@ -9,9 +9,18 @@ public class Pin {
     SimpleBooleanProperty isOn = new SimpleBooleanProperty(false);
     ArrayList<Pin> connectedTo = new ArrayList<>();
     private final boolean isInput;
+    private Gate parentGate;
 
     public Pin(boolean isInput) {
         this.isInput = isInput;
+    }
+
+    public void setParentGate(Gate parentGate) {
+        this.parentGate = parentGate;
+    }
+
+    public boolean isInput() {
+        return isInput;
     }
 
     public void toggle() {
@@ -25,20 +34,24 @@ public class Pin {
     }
 
     public boolean connectTo(Pin pin) {
-        if (this.isInput == pin.isInput) return false;
+        if (this == pin) return false;
 
-        if (this.isInput) {
-            if (!connectedTo.contains(pin)) {
-                connectedTo.add(pin);
-                this.setState(pin.getState());
-            }
+        //if (this.isInput == pin.isInput) return false;
+
+
+        if (!this.connectedTo.contains(pin)) {
+            this.connectedTo.add(pin);
         }
-        else {
-            if (!pin.connectedTo.contains(this)) {
-                pin.connectedTo.add(this);
-                pin.setState(this.getState());
-            }
+        if (!pin.connectedTo.contains(this)) {
+            pin.connectedTo.add(this);
         }
+
+        if (this.getState()) {
+            pin.setState(true);
+        } else if (pin.getState()) {
+            this.setState(true);
+        }
+
         return true;
 
     }
@@ -54,6 +67,10 @@ public class Pin {
     public void setState(boolean state) {
         if (this.isOn.get() != state) {
             this.isOn.set(state);
+
+            if (parentGate != null) {
+                parentGate.compute();
+            }
 
             for (Pin pin : connectedTo) {
                 pin.setState(state);

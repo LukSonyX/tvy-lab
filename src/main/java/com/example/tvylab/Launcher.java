@@ -19,7 +19,7 @@ public class Launcher extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("main-menu.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 650, 400);
 
         String css = Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm();
         scene.getStylesheets().add(css);

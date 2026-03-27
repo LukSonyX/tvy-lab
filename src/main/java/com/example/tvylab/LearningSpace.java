@@ -2,14 +2,15 @@ package com.example.tvylab;
 
 import java.io.IOException;
 
+
 public class LearningSpace {
-    // Add back button
-    // List for choosing lesson --gamelike--
-    // Shows lesson percentage
-    // Logic for adding new lesson
+    // Nahravani lekci (do nastaveni pridat nejakou slozku na nacitani)
+    // Vyber lekci
+
+    // List<CustomButton> lections = ...;
 
     public void onBackPressed() throws IOException { Launcher.changeScene("main-menu.fxml"); }
+    private void loadLessons() {}
 
-    public void firstLesson() {}
-    public void secondLesson() {}
+
 }
