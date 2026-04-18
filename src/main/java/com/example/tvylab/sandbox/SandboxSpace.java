@@ -2,12 +2,14 @@ package com.example.tvylab.sandbox;
 
 import com.example.tvylab.LanguageChanger;
 import com.example.tvylab.Launcher;
-import com.example.tvylab.SettingsController;
+import com.example.tvylab.settings.Settings;
+import com.example.tvylab.settings.SettingsController;
 import com.example.tvylab.sandbox.logic.*;
 import com.example.tvylab.sandbox.visual.GateNode;
 import com.example.tvylab.sandbox.visual.LogicItem;
 import com.example.tvylab.sandbox.visual.PinNode;
 import com.example.tvylab.sandbox.visual.Wire;
+import com.example.tvylab.settings.SettingsManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -33,6 +35,7 @@ public class SandboxSpace {
 
     @FXML
     private Pane sandboxPane;
+    private Settings settings;
     Line ghostWire = new Line();
     boolean wasDragged = false;
     private Pane zoomGroup;
@@ -64,6 +67,7 @@ public class SandboxSpace {
 
     @FXML
     public void initialize() {
+        settings = SettingsManager.load();
         saveBtn.setText(LanguageChanger.get("save"));
         backBtn.setText(LanguageChanger.get("back"));
         deleteToggle.setText(LanguageChanger.get("delete"));
@@ -102,7 +106,7 @@ public class SandboxSpace {
             }
         });
 
-        createComboboxFromFolders(new File(SettingsController.gatesDirectory.toURI()));
+        createComboboxFromFolders(new File(settings.gatesDir));
 
         gates.setPromptText(LanguageChanger.get("gates"));
         gates.getItems().addAll("NAND", "AND", "NOT");
@@ -192,8 +196,8 @@ public class SandboxSpace {
         if (gateName == null) return;
 
         try {
-            File file = new File(new File(SettingsController.gatesDirectory, category), gateName + ".json");
-            GateDefinition def = GateLoader.load(file.getAbsolutePath());
+            File file = new File(new File(settings.gatesDir, category), gateName + ".json");
+            GateDefinition def = GateManager.load(file.getAbsolutePath());
             CustomGate gate = new CustomGate(def.name, def.inputs, def.outputs, def.table);
             selectedItem = new GateNode(gate);
         } catch (Exception e) {
@@ -365,7 +369,7 @@ public class SandboxSpace {
         saveGate(def, category);
         clearSandbox();
         loadGate(gateName, category);
-        createComboboxFromFolders(new File(SettingsController.gatesDirectory.toURI()));
+        createComboboxFromFolders(new File(settings.gatesDir));
     }
 
     private Optional<Pair<String, String>> showSaveDialog() {
@@ -441,11 +445,11 @@ public class SandboxSpace {
 
     private void saveGate(GateDefinition def, String category) {
         try {
-            File categoryDir = new File(SettingsController.gatesDirectory, category);
+            File categoryDir = new File(settings.gatesDir, category);
             if (!categoryDir.exists()) categoryDir.mkdirs();
 
             File file = new File(categoryDir, def.name + ".json");
-            GateSaver.save(def, file.getAbsolutePath());
+            GateManager.save(def, file.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -461,8 +465,8 @@ public class SandboxSpace {
 
     public void loadGate(String gateName, String category) {
         try {
-            File file = new File(new File(SettingsController.gatesDirectory, category), gateName + ".json");
-            GateDefinition def = GateLoader.load(file.getAbsolutePath());
+            File file = new File(new File(settings.gatesDir, category), gateName + ".json");
+            GateDefinition def = GateManager.load(file.getAbsolutePath());
             CustomGate gate = new CustomGate(def.name, def.inputs, def.outputs, def.table);
             GateNode node = new GateNode(gate);
             zoomGroup.getChildren().add(node);

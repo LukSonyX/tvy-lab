@@ -1,7 +1,9 @@
 package com.example.tvylab;
 
+import com.example.tvylab.settings.Settings;
+import com.example.tvylab.settings.SettingsController;
+import com.example.tvylab.settings.SettingsManager;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,7 +23,9 @@ public class Launcher extends Application {
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root, 750, 500);
 
-        root.setStyle("-fx-font-size: " + SettingsController.fontSize + "px;");
+        Settings settings = SettingsManager.load();
+
+        root.setStyle("-fx-font-size: " + settings.fontSize + "px;");
 
         String css = Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm();
         scene.getStylesheets().add(css);
@@ -38,14 +42,9 @@ public class Launcher extends Application {
     }
 
     public static void changeScene(String fxml) throws IOException {
+        Settings settings = SettingsManager.load();
         Parent pane = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource(fxml)));
-        pane.setStyle("-fx-font-size: " + SettingsController.fontSize + "px;");
-        /*Scene scene = primaryStage.getScene();
-
-        pane.styleProperty().bind(Bindings.concat(
-                "-fx-font-size: ",
-                scene.widthProperty().divide(800).multiply(16).asString(), "pt;"
-        ));*/
+        pane.setStyle("-fx-font-size: " + settings.fontSize + "px;");
         primaryStage.getScene().setRoot(pane);
     }
 }
