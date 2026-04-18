@@ -7,9 +7,9 @@ import java.util.Objects;
 public class LanguageChanger {
     private static String currentLanguage = "cz";
     private static final Map<String, String> czech_table = Map.ofEntries(
-            Map.entry("save", "Uložit"),
+            Map.entry("save", "ULOŽIT"),
             Map.entry("delete", "Smazat"),
-            Map.entry("back", "Zpět"),
+            Map.entry("back", "ZPĚT"),
             Map.entry("input", "Vstup"),
             Map.entry("output", "Výstup"),
             Map.entry("gates", "Hradla"),
