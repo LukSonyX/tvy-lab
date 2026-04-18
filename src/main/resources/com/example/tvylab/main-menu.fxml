@@ -3,12 +3,11 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="280.0" minWidth="280.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tvylab.MainMenuController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="250.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
@@ -17,18 +16,18 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <VBox fx:id="vbox" alignment="CENTER" scaleX="0.8" scaleY="0.8" scaleZ="0.8" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <VBox fx:id="vbox" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" scaleX="0.8" scaleY="0.8" scaleZ="0.8" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLearnClick" prefWidth="100.0" scaleY="1.1" text="Learn" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <Button fx:id="learnBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLearnClick" prefWidth="100.0" scaleY="1.1" text="Learn" textAlignment="CENTER" VBox.vgrow="ALWAYS">
 
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" layoutY="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSandboxClick" prefWidth="100.0" scaleY="1.1" text="Sandbox" VBox.vgrow="ALWAYS">
+            <Button fx:id="sandboxBtn" alignment="CENTER" contentDisplay="CENTER" layoutY="1.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSandboxClick" prefWidth="100.0" scaleY="1.1" text="Sandbox" VBox.vgrow="ALWAYS">
 
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSettingsClick" prefWidth="100.0" scaleY="1.1" text="Settings" VBox.vgrow="ALWAYS">
+            <Button fx:id="settingsBtn" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSettingsClick" prefWidth="100.0" scaleY="1.1" text="Settings" VBox.vgrow="ALWAYS">
 
             </Button>
-            <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onExitClick" prefWidth="100.0" scaleY="1.1" text="Exit" VBox.vgrow="ALWAYS">
+            <Button fx:id="exitBtn" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onExitClick" prefWidth="100.0" scaleY="1.1" text="Exit" VBox.vgrow="ALWAYS">
 
             </Button>
          </children>
@@ -36,10 +35,7 @@
             <Insets />
          </GridPane.margin>
       </VBox>
-      <Label text="TVYlab" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
+      <Label text="TVYlab" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
       </Label>
    </children>
 </GridPane>

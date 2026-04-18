@@ -12,9 +12,21 @@ public class MainMenuController {
 
     @FXML
     private VBox vbox;
+    @FXML
+    private Button learnBtn;
+    @FXML
+    private Button sandboxBtn;
+    @FXML
+    private Button settingsBtn;
+    @FXML
+    private Button exitBtn;
 
     @FXML
     public void initialize() {
+        learnBtn.setText(LanguageChanger.get("learn"));
+        sandboxBtn.setText(LanguageChanger.get("sandbox"));
+        settingsBtn.setText(LanguageChanger.get("settings"));
+        exitBtn.setText(LanguageChanger.get("exit"));
     }
     public void onLearnClick() throws IOException { Launcher.changeScene("learning-space.fxml"); }
 

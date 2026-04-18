@@ -1,5 +1,5 @@
 .root {
-    -fx-font-size: 16px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 
@@ -17,5 +17,5 @@
 }
 
 .label {
-    -fx-font-size: 1.1em;
+    -fx-font-size: 1.2em;
 }

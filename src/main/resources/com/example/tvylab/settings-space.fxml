@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tvylab.SettingsController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tvylab.SettingsController">
 
-    <!-- TOP -->
     <top>
         <StackPane>
             <Button onAction="#onBackPressed" text="BACK" StackPane.alignment="TOP_LEFT">
@@ -27,44 +35,45 @@
         </StackPane>
     </top>
 
-    <!-- CONTENT -->
     <center>
         <VBox alignment="CENTER" prefHeight="405.0" prefWidth="600.0" spacing="20">
             <padding>
                 <Insets left="20" right="20" top="40" />
             </padding>
+         <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="560.0">
+            <children>
+               <Label alignment="TOP_CENTER" text="Font Size (px): ">
+                  <HBox.margin>
+                     <Insets bottom="20.0" right="10.0" />
+                  </HBox.margin>
+               </Label>
+                <Slider fx:id="fontSlider" blockIncrement="1.0" majorTickUnit="8.0" max="32.0" min="16.0" showTickLabels="true" snapToTicks="true" value="14.0" />
+            </children>
+         </HBox>
 
-            <!-- Lessons -->
             <GridPane hgap="10" vgap="10">
                 <columnConstraints>
-                    <ColumnConstraints hgrow="NEVER" />
                     <ColumnConstraints hgrow="ALWAYS" />
                     <ColumnConstraints hgrow="NEVER" />
                 </columnConstraints>
 
-                <Label text="Lessons dir:" GridPane.columnIndex="0" />
+                <Label fx:id="lessonsDir" text="Lessons dir:" GridPane.columnIndex="0" />
 
-                <TextField fx:id="lessonsField" maxWidth="Infinity" GridPane.columnIndex="1" />
-
-                <Button text="Browse" GridPane.columnIndex="2" />
+                <Button text="Browse" GridPane.columnIndex="1" />
             <rowConstraints>
                <RowConstraints />
             </rowConstraints>
             </GridPane>
 
-            <!-- Gates -->
             <GridPane hgap="10" vgap="10">
                 <columnConstraints>
-                    <ColumnConstraints hgrow="NEVER" />
                     <ColumnConstraints hgrow="ALWAYS" />
                     <ColumnConstraints hgrow="NEVER" />
                 </columnConstraints>
 
-                <Label text="Gates dir:" GridPane.columnIndex="0" />
+                <Label fx:id="gatesDir" text="Gates dir:" GridPane.columnIndex="0" />
 
-                <TextField maxWidth="Infinity" GridPane.columnIndex="1" />
-
-                <Button text="Browse" GridPane.columnIndex="2" />
+                <Button onAction="#onGatesFolderPressed" text="Browse" GridPane.columnIndex="1" />
             <rowConstraints>
                <RowConstraints />
             </rowConstraints>
@@ -72,5 +81,11 @@
 
         </VBox>
     </center>
+   <left>
+      <Pane prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </right>
 
 </BorderPane>

@@ -12,18 +12,23 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
+import java.util.ArrayList;
+
 
 public class PinNode extends Pane implements LogicItem {
     Pin logic;
+    private ArrayList<Wire> wires = new ArrayList<>();
     Circle texture = new Circle(10, Paint.valueOf("black"));;
     String name;
     Label menuButton = new Label("+");
     Label nameLabel;
+    private int order;
 
-    public PinNode(Pin logic, String name) {
+    public PinNode(Pin logic, String name, int order) {
         this.getChildren().add(texture);
         this.name = name;
         this.logic = logic;
+        this.order = order;
         nameLabel = new Label(name);
         setPickOnBounds(false);
         this.setStyle("-fx-font-size: 14pt;");
@@ -80,5 +85,32 @@ public class PinNode extends Pane implements LogicItem {
 
     public ObservableValue<? extends Paint> fillProperty() {
         return texture.fillProperty();
+    }
+
+    public void addWire(Wire wire) {
+        if (!wires.contains(wire)) {
+            wires.add(wire);
+            if (logic.getParentGate() != null) {
+                logic.getParentGate().update();
+            };
+        }
+    }
+
+    public void removeWire(Wire wire) {
+        wires.remove(wire);
+    }
+
+    public ArrayList<Wire> getWires() {
+        return wires;
+    }
+
+    public void setSide(boolean isLeft) {
+        if (isLeft) {
+            nameLabel.layoutXProperty().bind(nameLabel.widthProperty().multiply(-1).subtract(15));
+        }
+    }
+
+    public int getOrder() {
+        return order;
     }
 }

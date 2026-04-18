@@ -2,57 +2,83 @@ package com.example.tvylab.sandbox.visual;
 
 import com.example.tvylab.sandbox.logic.Gate;
 import com.example.tvylab.sandbox.logic.Pin;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 public class GateNode extends Pane implements LogicItem {
     Gate logic;
     String name;
 
+    private static final double WIDTH = 90;
+    private static final double PIN_SPACING = 25;
+    private static final double TOP_PADDING = 20;
+    private static final double SIDE_OFFSET = 6;
+
     public GateNode(Gate logic) {
         this.logic = logic;
         this.name = logic.name;
-        this.setStyle("-fx-font-size: 14pt;");
-        setPickOnBounds(false);
 
-        Rectangle body = new Rectangle(80, 60);
+        setPickOnBounds(false);
+        this.setStyle("-fx-font-size: 14pt;");
+
+        int inCount = logic.getInputPins().size();
+        int outCount = logic.getOutputPins().size();
+        int maxPins = Math.max(inCount, outCount);
+
+        Label label = new Label(name);
+        label.setWrapText(true);
+        label.setMaxWidth(WIDTH - 10);
+        label.setLayoutX(5);
+        label.setLayoutY(5);
+
+        label.layoutBoundsProperty().addListener((obs, old, bounds) -> {
+            double dynamicHeight = Math.max(40, TOP_PADDING + maxPins * PIN_SPACING);
+
+            double totalHeight = Math.max(dynamicHeight, bounds.getHeight() + 10);
+
+            ((Rectangle) getChildren().get(0)).setHeight(totalHeight);
+        });
+
+        double baseHeight = Math.max(60, TOP_PADDING + maxPins * PIN_SPACING);
+
+        Rectangle body = new Rectangle(WIDTH, baseHeight);
         body.setFill(Paint.valueOf("lightgray"));
         body.setStroke(Paint.valueOf("black"));
         body.setStrokeWidth(2);
 
-        Text label = new Text(name);
-        label.setLayoutX(15);
-        label.setLayoutY(35);
+        getChildren().addAll(body, label);
 
-        this.getChildren().addAll(body, label);
-
-        int inCount = logic.getInputPins().size();
         for (int i = 0; i < inCount; i++) {
             Pin pin = logic.getInputPins().get(i);
-            PinNode pinNode = new PinNode(pin, "In " + i);
+            PinNode pinNode = new PinNode(pin, "In " + i, i);
+            pinNode.setSide(true);
 
-            pinNode.setLayoutX(-5);
-            pinNode.setLayoutY((55.0 / (inCount + 0.5)) * (i + 1));
+            pinNode.setLayoutX(-SIDE_OFFSET);
+            pinNode.setLayoutY(TOP_PADDING + i * PIN_SPACING);
 
-            this.getChildren().add(pinNode);
+            getChildren().add(pinNode);
         }
 
-        int outCount = logic.getOutputPins().size();
         for (int i = 0; i < outCount; i++) {
             Pin pin = logic.getOutputPins().get(i);
-            PinNode pinNode = new PinNode(pin, "Out " + i);
+            PinNode pinNode = new PinNode(pin, "Out " + i, i);
 
-            pinNode.setLayoutX(85);
-            pinNode.setLayoutY((60.0 / (outCount + 1)) * (i + 1));
+            pinNode.setLayoutX(WIDTH + SIDE_OFFSET);
+            pinNode.setLayoutY(TOP_PADDING + i * PIN_SPACING);
 
-            this.getChildren().add(pinNode);
+            getChildren().add(pinNode);
         }
+
+    }
+
+    public Gate getLogic() {
+        return logic;
     }
 
     @Override
     public String getName() {
-        return "";
+        return name;
     }
 }

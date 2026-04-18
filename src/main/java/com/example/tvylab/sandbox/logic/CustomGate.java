@@ -9,9 +9,10 @@ public class CustomGate extends Gate {
 
     public CustomGate(String name, int inputs, int outputs,
                           Map<String, List<Boolean>> table) {
+        setupPins(inputs, outputs);
         this.name = name;
         this.table = table;
-        setupPins(inputs, outputs);
+        compute();
     }
 
     @Override

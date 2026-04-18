@@ -27,6 +27,6 @@ public class NandGate extends Gate implements LogicItem {
 
     @Override
     public String getName() {
-        return "";
+        return this.name;
     }
 }

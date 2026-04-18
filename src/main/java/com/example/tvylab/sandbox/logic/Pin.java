@@ -35,8 +35,7 @@ public class Pin {
 
     public boolean connectTo(Pin pin) {
         if (this == pin) return false;
-
-        //if (this.isInput == pin.isInput) return false;
+        if (this.parentGate == pin.parentGate) return false;
 
 
         if (!this.connectedTo.contains(pin)) {
@@ -51,9 +50,21 @@ public class Pin {
         } else if (pin.getState()) {
             this.setState(true);
         }
-
         return true;
+    }
 
+    public void disconnectFrom(Pin pin) {
+        if (this.connectedTo.contains(pin)) {
+            pin.isOn.set(false);
+            pin.connectedTo.remove(this);
+            connectedTo.remove(pin);
+        }
+    }
+
+    public void disconnectAll() {
+        for (Pin pin : new ArrayList<>(connectedTo)) {
+            disconnectFrom(pin);
+        }
     }
 
     public BooleanProperty isOnProperty() {
@@ -68,13 +79,13 @@ public class Pin {
         if (this.isOn.get() != state) {
             this.isOn.set(state);
 
-            if (parentGate != null) {
-                parentGate.compute();
-            }
-
             for (Pin pin : connectedTo) {
                 pin.setState(state);
             }
         }
+    }
+
+    public Gate getParentGate() {
+        return parentGate;
     }
 }
