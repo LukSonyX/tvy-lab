@@ -9,8 +9,8 @@ public class LessonManager {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static Lesson load(String path) throws IOException {
-        return mapper.readValue(new File(path), Lesson.class);
+    public static Lesson load(File path) throws IOException {
+        return mapper.readValue(path, Lesson.class);
     }
 
 }

@@ -3,9 +3,9 @@ package com.example.tvylab.sandbox.visual;
 import com.example.tvylab.sandbox.logic.Pin;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
-import javafx.scene.control.ContextMenu;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -17,12 +17,11 @@ import java.util.ArrayList;
 
 public class PinNode extends Pane implements LogicItem {
     Pin logic;
-    private ArrayList<Wire> wires = new ArrayList<>();
-    Circle texture = new Circle(10, Paint.valueOf("black"));;
+    private final ArrayList<Wire> wires = new ArrayList<>();
+    Circle texture = new Circle(10, Paint.valueOf("black"));
     String name;
-    Label menuButton = new Label("+");
     Label nameLabel;
-    private int order;
+    private final int order;
 
     public PinNode(Pin logic, String name, int order) {
         this.getChildren().add(texture);
@@ -38,31 +37,40 @@ public class PinNode extends Pane implements LogicItem {
         Circle hoverArea = new Circle(20);
         hoverArea.setFill(Color.TRANSPARENT);
 
-        //ContextMenu pinMenu = new ContextMenu();
-
-        menuButton.setVisible(false);
-        menuButton.setLayoutX(14);
-        menuButton.setLayoutY(-27);
-        menuButton.setTextFill(Paint.valueOf("white"));
-
-        nameLabel.setMouseTransparent(true);
+        //nameLabel.setMouseTransparent(true);
         nameLabel.setVisible(false);
         nameLabel.setLayoutY(-12);
         nameLabel.setLayoutX(texture.getLayoutX() + nameLabel.getWidth() + 15);
         nameLabel.setTextFill(Paint.valueOf("white"));
 
+        nameLabel.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                TextField field = new TextField(nameLabel.getText());
 
+                field.setOnAction(ev -> {
+                    nameLabel.setText(field.getText());
+                    replace(field, nameLabel);
+                });
 
-        hoverProperty().addListener((obs, oldVal, hovering) -> {
-            menuButton.setVisible(hovering);
-            nameLabel.setVisible(hovering);
+                replace(nameLabel, field);
+            }
         });
+
+
+
+        hoverProperty().addListener((obs, oldVal, hovering) -> nameLabel.setVisible(hovering));
 
         texture.fillProperty().bind(Bindings.when(logic.isOnProperty())
                 .then(Paint.valueOf("green"))
                 .otherwise(Paint.valueOf("black")));
 
-        getChildren().addAll(hoverArea, menuButton, nameLabel);
+        getChildren().addAll(hoverArea, nameLabel);
+    }
+
+    private void replace(Node oldNode, Node newNode) {
+        Pane parent = (Pane) oldNode.getParent();
+        int index = parent.getChildren().indexOf(oldNode);
+        parent.getChildren().set(index, newNode);
     }
 
     public Pin getLogic() {
@@ -92,7 +100,7 @@ public class PinNode extends Pane implements LogicItem {
             wires.add(wire);
             if (logic.getParentGate() != null) {
                 logic.getParentGate().update();
-            };
+            }
         }
     }
 

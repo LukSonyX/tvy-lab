@@ -6,7 +6,7 @@ import java.io.File;
 
 public class SettingsManager {
 
-    private static final String FILE_PATH = "src/main/java/com/example/tvylab/settings/settings-config.json";
+    private static final String FILE_PATH = "settings-config.json";
     private static final ObjectMapper mapper = new ObjectMapper();
 
     public static Settings load() {

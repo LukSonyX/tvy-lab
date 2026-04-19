@@ -109,7 +109,7 @@ public class SandboxSpace {
         createComboboxFromFolders(new File(settings.gatesDir));
 
         gates.setPromptText(LanguageChanger.get("gates"));
-        gates.getItems().addAll("NAND", "AND", "NOT");
+        gates.getItems().addAll("NAND", "AND", "NOT", "BUFFER");
         gates.setOnAction(e -> onComboboxSelect(gates));
 
         sandboxPane.setOnMousePressed(this::handleMousePressed);
@@ -134,7 +134,7 @@ public class SandboxSpace {
                 combo = new ComboBox<>();
                 combo.setMaxWidth(Double.MAX_VALUE);
                 combo.setPrefWidth(Double.MAX_VALUE);
-                combo.setPromptText(category.toUpperCase());
+                combo.setPromptText(category);
                 categoryBoxes.put(category, combo);
 
                 Button deleteBtn = new Button("X");
@@ -488,6 +488,7 @@ public class SandboxSpace {
             case "NAND" -> new GateNode(new NandGate());
             case "AND" -> new GateNode(new AndGate());
             case "NOT" -> new GateNode(new NotGate());
+            case "BUFFER" -> new GateNode(new BufferGate());
             default -> null;
         };
 

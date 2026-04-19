@@ -31,6 +31,7 @@ public class LanguageChanger {
             Map.entry("browse", "Hledat"),
             Map.entry("language", "Jazyk:"),
             Map.entry("current_language", "Čeština"),
+            Map.entry("basics", "Základy"),
             Map.entry("", "")
     );
 
@@ -59,6 +60,7 @@ public class LanguageChanger {
             Map.entry("browse", "Browse"),
             Map.entry("language", "Language:"),
             Map.entry("current_language", "English"),
+            Map.entry("basics", "Basics"),
             Map.entry("", "")
     );
 
