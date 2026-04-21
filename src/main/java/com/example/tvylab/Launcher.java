@@ -1,7 +1,6 @@
 package com.example.tvylab;
 
 import com.example.tvylab.settings.Settings;
-import com.example.tvylab.settings.SettingsController;
 import com.example.tvylab.settings.SettingsManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

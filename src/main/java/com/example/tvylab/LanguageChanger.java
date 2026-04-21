@@ -1,8 +1,6 @@
 package com.example.tvylab;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class LanguageChanger {
     private static String currentLanguage = "cz";
@@ -61,7 +59,12 @@ public class LanguageChanger {
             Map.entry("language", "Language:"),
             Map.entry("current_language", "English"),
             Map.entry("basics", "Basics"),
-            Map.entry("", "")
+            Map.entry("folder_creation_error", "Error: Folder creation"),
+            Map.entry("folder_creation_error_context", "Couldn't create folder!"),
+            Map.entry("folder_deletion_error", "Error: Folder deletion"),
+            Map.entry("folder_deletion_error_context", "Couldn't delete folder!"),
+            Map.entry("file_deletion_error", "Error: File deletion"),
+            Map.entry("file_deletion_error_context", "Couldn't delete file!")
     );
 
     public static String get(String key) {

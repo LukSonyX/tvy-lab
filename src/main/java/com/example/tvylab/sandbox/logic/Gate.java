@@ -13,12 +13,12 @@ public abstract class Gate {
 
     protected void setupPins(int inCount, int outCount) {
         for (int i = 0; i < inCount; i++) {
-            Pin p = new Pin(true);
+            Pin p = new Pin(false);
             p.setParentGate(this);
             inputPins.add(p);
         }
         for (int i = 0; i < outCount; i++) {
-            Pin p = new Pin(false);
+            Pin p = new Pin(true);
             p.setParentGate(this);
             outputPins.add(p);
         }

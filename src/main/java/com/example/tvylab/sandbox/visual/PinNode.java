@@ -81,6 +81,9 @@ public class PinNode extends Pane implements LogicItem {
         texture.setStroke(paint);
     }
 
+    public void setTextColor(String color) {
+        nameLabel.setTextFill(Paint.valueOf(color));
+    }
 
     @Override
     public String getName() {

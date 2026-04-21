@@ -6,8 +6,8 @@ import javafx.scene.shape.Line;
 import java.awt.*;
 
 public class Wire extends Line {
-    private PinNode connectedFrom;
-    private PinNode connectedTo;
+    private final PinNode connectedFrom;
+    private final PinNode connectedTo;
 
     public Wire(PinNode connectedFrom, PinNode connectedTo) {
         this.connectedFrom = connectedFrom;

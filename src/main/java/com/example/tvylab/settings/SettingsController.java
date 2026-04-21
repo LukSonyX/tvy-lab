@@ -84,9 +84,7 @@ public class SettingsController {
         fontSlider.setValue(settings.fontSize);
         updateFont(settings.fontSize);
 
-        fontSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            updateFont(newVal.intValue());
-        });
+        fontSlider.valueProperty().addListener((obs, oldVal, newVal) -> updateFont(newVal.intValue()));
     }
 
     @FXML

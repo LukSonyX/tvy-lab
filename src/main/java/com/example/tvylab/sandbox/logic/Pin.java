@@ -36,6 +36,7 @@ public class Pin {
     public boolean connectTo(Pin pin) {
         if (this == pin) return false;
         if (this.parentGate == pin.parentGate) return false;
+        if (this.isInput == pin.isInput) return false;
 
 
         if (!this.connectedTo.contains(pin)) {
@@ -76,6 +77,7 @@ public class Pin {
     }
 
     public void setState(boolean state) {
+        if (this.isOn.get() == state) return;
         if (this.isOn.get() != state) {
             this.isOn.set(state);
 

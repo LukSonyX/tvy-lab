@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomGate extends Gate {
-    private Map<String, List<Boolean>> table;
+    private final Map<String, List<Boolean>> table;
 
     public CustomGate(String name, int inputs, int outputs,
                           Map<String, List<Boolean>> table) {
@@ -17,13 +17,13 @@ public class CustomGate extends Gate {
 
     @Override
     protected void compute() {
-        String key = "";
+        StringBuilder key = new StringBuilder();
 
         for (Pin p : inputPins) {
-            key += p.getState() ? "1" : "0";
+            key.append(p.getState() ? "1" : "0");
         }
 
-        List<Boolean> results = table.getOrDefault(key, new ArrayList<>());
+        List<Boolean> results = table.getOrDefault(key.toString(), new ArrayList<>());
 
         for (int i = 0; i < outputPins.size(); i++) {
             boolean value = i < results.size() && results.get(i);

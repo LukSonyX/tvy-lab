@@ -1,8 +1,6 @@
 package com.example.tvylab.lessons;
 
 import com.example.tvylab.Launcher;
-import com.example.tvylab.settings.Settings;
-import com.example.tvylab.settings.SettingsManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -16,9 +14,5 @@ public class LessonController {
 
     @FXML
     public void initialize() {
-    }
-
-    public void setLesson(Lesson lesson) {
-        titleLabel.setText(lesson.title);
     }
 }

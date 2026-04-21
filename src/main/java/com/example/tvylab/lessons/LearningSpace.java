@@ -19,6 +19,7 @@ import java.io.IOException;
 
 public class LearningSpace {
 
+    @FXML
     public Button backBtn;
 
     public void onBackPressed() throws IOException { Launcher.changeScene("main-menu.fxml"); }
@@ -35,40 +36,24 @@ public class LearningSpace {
         backBtn.setText(LanguageChanger.get("back"));
         createTabsFromFolders(new File(settings.lessonsDir));
 
-        addLessonButton(basicsBox, "First", "Lessons/Basics/first.json");
+        addLessonButton(basicsBox, "First", "lesson-input-cz.fxml");
     }
 
-    public void openLesson(File jsonPath) {
-        Settings settings = SettingsManager.load();
+    public void openLesson(String lessonSrc) throws IOException {
+        Launcher.changeScene("/com/example/tvylab/lessons-builtin/" + lessonSrc);
 
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/example/tvylab/lessons-builtin/lesson-view.fxml")
-            );
-
-            Parent root = loader.load();
-            root.setStyle("-fx-font-size: " + settings.fontSize + "px;");
-
-            LessonController controller = loader.getController();
-
-            Lesson lesson = LessonManager.load(jsonPath);
-            controller.setLesson(lesson);
-
-            Launcher.getPrimaryStage().getScene().setRoot(root);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    private void addLessonButton(VBox box, String name, String jsonPath) {
+    private void addLessonButton(VBox box, String name, String lesson) {
         Button btn = new Button(name);
         btn.setMaxWidth(Double.MAX_VALUE);
-
         btn.setOnAction(e -> {
-            openLesson(new File(jsonPath));
+            try {
+                openLesson(lesson);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
-
         box.getChildren().add(btn);
     }
 

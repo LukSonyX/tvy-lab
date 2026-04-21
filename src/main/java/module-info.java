@@ -15,5 +15,9 @@ module com.example.tvylab {
     opens com.example.tvylab.lessons to javafx.fxml;
     exports com.example.tvylab.settings;
     opens com.example.tvylab.settings to javafx.fxml;
+    exports com.example.tvylab.sandbox.managers;
+    opens com.example.tvylab.sandbox.managers to javafx.fxml;
+    exports com.example.tvylab.sandbox.visual;
+    exports com.example.tvylab.sandbox.logic;
 
 }
