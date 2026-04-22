@@ -1,10 +1,7 @@
 package com.example.tvylab.lessons;
 
 import com.example.tvylab.Launcher;
-import com.example.tvylab.sandbox.logic.AndGate;
-import com.example.tvylab.sandbox.logic.BufferGate;
-import com.example.tvylab.sandbox.logic.Gate;
-import com.example.tvylab.sandbox.logic.Pin;
+import com.example.tvylab.sandbox.logic.*;
 import com.example.tvylab.sandbox.managers.WireManager;
 import com.example.tvylab.sandbox.visual.GateNode;
 import com.example.tvylab.sandbox.visual.PinNode;
@@ -134,10 +131,15 @@ public class GenericLessonController {
                 andNode.setLayoutY(100);
                 inA.setLayoutX(145);
                 inA.setLayoutY(120);
+                inA.setTextColor("black");
+                inA.setSide(true);
                 inB.setLayoutX(145);
                 inB.setLayoutY(145);
+                inB.setTextColor("black");
+                inB.setSide(true);
                 out.setLayoutX(245);
                 out.setLayoutY(120);
+                out.setTextColor("black");
 
                 inA.getLogic().connectTo(andLogic.getInputPins().get(0));
                 inB.getLogic().connectTo(andLogic.getInputPins().get(1));
@@ -151,8 +153,8 @@ public class GenericLessonController {
 
             case "NOT_BUFFER_DEMO":
                 Gate singleGateLogic = currentLesson.title.contains("NOT") ?
-                        new com.example.tvylab.sandbox.logic.NotGate() :
-                        new com.example.tvylab.sandbox.logic.BufferGate();
+                        new NotGate() :
+                        new BufferGate();
 
                 GateNode singleNode = new GateNode(singleGateLogic);
                 PinNode sIn = new PinNode(new Pin(true), "Vstup", 0);
@@ -164,6 +166,7 @@ public class GenericLessonController {
                 singleNode.setLayoutY(100);
                 sIn.setLayoutX(145);
                 sIn.setLayoutY(120);
+                sIn.setSide(true);
                 sOut.setLayoutX(245);
                 sOut.setLayoutY(120);
 
@@ -175,20 +178,24 @@ public class GenericLessonController {
                 break;
 
             case "NAND_GATE_DEMO":
-                com.example.tvylab.sandbox.logic.NandGate nandLogic = new com.example.tvylab.sandbox.logic.NandGate();
+                NandGate nandLogic = new NandGate();
                 GateNode nandNode = new GateNode(nandLogic);
 
                 PinNode nInA = new PinNode(new Pin(true), "A", 0);
                 PinNode nInB = new PinNode(new Pin(true), "B", 1);
                 PinNode nOut = new PinNode(new Pin(false), "Výstup", 0);
 
-                nInA.setTextColor("black"); nInB.setTextColor("black"); nOut.setTextColor("black");
+                nInA.setTextColor("black");
+                nInB.setTextColor("black");
+                nOut.setTextColor("black");
                 nandNode.setLayoutX(150);
                 nandNode.setLayoutY(100);
                 nInA.setLayoutX(145);
                 nInA.setLayoutY(120);
+                nInA.setSide(true);
                 nInB.setLayoutX(145);
                 nInB.setLayoutY(145);
+                nInB.setSide(true);
                 nOut.setLayoutX(245);
                 nOut.setLayoutY(120);
 
@@ -212,7 +219,7 @@ public class GenericLessonController {
 
                 signalIn.setLayoutX(100);
                 signalIn.setLayoutY(150);
-                lightOut.setLayoutX(350);
+                lightOut.setLayoutX(280);
                 lightOut.setLayoutY(150);
 
                 lightOut.getLogic().setParentGate(wireBuffer);
