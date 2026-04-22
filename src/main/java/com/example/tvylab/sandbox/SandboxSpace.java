@@ -272,6 +272,11 @@ public class SandboxSpace {
         Node item = interactionManager.findTopItem((Node) e.getTarget());
 
         if (e.getButton() == MouseButton.PRIMARY) {
+            if (e.getClickCount() == 2 && item instanceof GateNode gate) {
+                showRenameDialog(gate);
+                return;
+            }
+
             if (deleteToggle.isSelected()) {
                 nodeManager.delete(item);
             }
@@ -289,6 +294,19 @@ public class SandboxSpace {
             PinNode pin = findPin((Node) e.getTarget());
             wireManager.handleRightClick(pin, local);
         }
+    }
+
+    private void showRenameDialog(GateNode gate) {
+        TextInputDialog dialog = new TextInputDialog(gate.getLogic().name);
+        dialog.setTitle(LanguageChanger.get("rename"));
+        dialog.setHeaderText(LanguageChanger.get("rename_gate"));
+        dialog.setContentText(LanguageChanger.get("name") + ":");
+
+        dialog.showAndWait().ifPresent(newName -> {
+            if (!newName.isBlank()) {
+                gate.setName(newName);
+            }
+        });
     }
 
     private void handleMouseMove(MouseEvent e) {

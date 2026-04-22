@@ -8,8 +8,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 public class GateNode extends Pane implements LogicItem {
-    Gate logic;
-    String name;
+    private final Gate logic;
+    private String name;
+    private final Label label;
 
     private static final double WIDTH = 90;
     private static final double PIN_SPACING = 25;
@@ -27,7 +28,7 @@ public class GateNode extends Pane implements LogicItem {
         int outCount = logic.getOutputPins().size();
         int maxPins = Math.max(inCount, outCount);
 
-        Label label = new Label(name);
+        label = new Label(name);
         label.setWrapText(true);
         label.setMaxWidth(WIDTH - 10);
         label.setLayoutX(5);
@@ -70,11 +71,16 @@ public class GateNode extends Pane implements LogicItem {
 
             getChildren().add(pinNode);
         }
-
     }
 
     public Gate getLogic() {
         return logic;
+    }
+
+    public void setName(String newName) {
+        this.name = newName;
+        this.logic.name = newName;
+        this.label.setText(name);
     }
 
     @Override
