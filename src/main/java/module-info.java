@@ -12,7 +12,7 @@ module com.example.tvylab {
     exports com.example.tvylab.sandbox;
     opens com.example.tvylab.sandbox to javafx.fxml;
     exports com.example.tvylab.lessons;
-    opens com.example.tvylab.lessons to javafx.fxml;
+    opens com.example.tvylab.lessons to javafx.fxml, com.fasterxml.jackson.databind;
     exports com.example.tvylab.settings;
     opens com.example.tvylab.settings to javafx.fxml;
     exports com.example.tvylab.sandbox.managers;

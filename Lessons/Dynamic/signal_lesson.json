@@ -1,0 +1,19 @@
+{
+  "title": "Logický signál",
+  "content": [
+    "V digitální elektronice používáme dva stavy: 0 a 1.",
+    "Logická 1 (High) představuje přítomnost napětí (např. 5V nebo zapnutý vypínač).",
+    "Logická 0 (Low) představuje nulové napětí (vypnuto).",
+    "Zkus kliknout na zdroj v simulaci a sleduj, jak se mění barva žárovky. Zelená barva pinu značí logickou 1."
+  ],
+  "simulationType": "Signal",
+  "quiz": {
+    "question": "Jakou hodnotu má logický signál, pokud je obvod vypnutý (bez napětí)?",
+    "options": [
+      "Logická 1",
+      "Logická 0",
+      "Logická 2"
+    ],
+    "correctOptionIndex": 1
+  }
+}

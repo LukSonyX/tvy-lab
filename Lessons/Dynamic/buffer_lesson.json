@@ -1,0 +1,23 @@
+{
+  "title": "Hradlo Buffer",
+  "content": [
+    "Hradlo Buffer (oddělovač) neprovádí žádnou logickou operaci.",
+    "To znamená, že stav na výstupu je shodný se stavem na vstupu.",
+    "V reálné elektronice se používá k posílení slabého signálu nebo k časovému zpoždění.",
+    "Pravdivostní tabulka hradla Buffer:",
+    "VSTUP | VÝSTUP",
+    "--------------",
+    "  0   |   0   ",
+    "  1   |   1   "
+  ],
+  "simulationType": "NOT_BUFFER_DEMO",
+  "quiz": {
+    "question": "Jaká hodnota bude na výstupu Bufferu, pokud na vstup přivedeme logickou 0?",
+    "options": [
+      "Logická 0",
+      "Logická 1",
+      "Žádná"
+    ],
+    "correctOptionIndex": 0
+  }
+}

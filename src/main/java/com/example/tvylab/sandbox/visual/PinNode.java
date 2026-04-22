@@ -6,7 +6,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -32,12 +31,9 @@ public class PinNode extends Pane implements LogicItem {
         setPickOnBounds(false);
         this.setStyle("-fx-font-size: 14pt;");
 
-        Tooltip.install(this, new Tooltip(name));
-
         Circle hoverArea = new Circle(20);
         hoverArea.setFill(Color.TRANSPARENT);
 
-        //nameLabel.setMouseTransparent(true);
         nameLabel.setVisible(false);
         nameLabel.setLayoutY(-12);
         nameLabel.setLayoutX(texture.getLayoutX() + nameLabel.getWidth() + 15);

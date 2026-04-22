@@ -30,7 +30,7 @@ public class Launcher extends Application {
         scene.getStylesheets().add(css);
 
         stage.setMinWidth(600);
-        stage.setMinHeight(400);
+        stage.setMinHeight(650);
         stage.setTitle("tvylab");
         stage.setScene(scene);
         stage.show();

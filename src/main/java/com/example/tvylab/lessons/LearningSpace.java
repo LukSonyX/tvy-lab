@@ -4,6 +4,7 @@ import com.example.tvylab.LanguageChanger;
 import com.example.tvylab.Launcher;
 import com.example.tvylab.settings.Settings;
 import com.example.tvylab.settings.SettingsManager;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,23 +37,38 @@ public class LearningSpace {
         backBtn.setText(LanguageChanger.get("back"));
         createTabsFromFolders(new File(settings.lessonsDir));
 
-        addLessonButton(basicsBox, "First", "lesson-input-cz.fxml");
+        // Bruteforce
+        addLessonButton(basicsBox, "Vstup a Výstup", new File("Lessons/Dynamic/basics_input.json"));
+        addLessonButton(basicsBox, "Signál", new File("Lessons/Dynamic/signal_lesson.json"));
+        addLessonButton(basicsBox, "Pravdivostní tabulka (AND)", new File("Lessons/Dynamic/and_lesson.json"));
+        addLessonButton(basicsBox, "Hradlo NOT", new File("Lessons/Dynamic/not_lesson.json"));
+        addLessonButton(basicsBox, "Hradlo Buffer", new File("Lessons/Dynamic/buffer_lesson.json"));
+        addLessonButton(basicsBox, "Hradlo NAND", new File("Lessons/Dynamic/nand_lesson.json"));
     }
 
-    public void openLesson(String lessonSrc) throws IOException {
-        Launcher.changeScene("/com/example/tvylab/lessons-builtin/" + lessonSrc);
+    public void openLesson(File jsonFile) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            LessonData lessonData = mapper.readValue(jsonFile, LessonData.class);
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tvylab/lessons-builtin/base-lesson.fxml"));
+            Parent root = loader.load();
+
+            GenericLessonController controller = loader.getController();
+            controller.initLesson(lessonData);
+
+            Launcher.getPrimaryStage().getScene().setRoot(root);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void addLessonButton(VBox box, String name, String lesson) {
+    private void addLessonButton(VBox box, String name, File lesson) {
         Button btn = new Button(name);
         btn.setMaxWidth(Double.MAX_VALUE);
         btn.setOnAction(e -> {
-            try {
-                openLesson(lesson);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            openLesson(lesson);
         });
         box.getChildren().add(btn);
     }
@@ -75,7 +91,7 @@ public class LearningSpace {
             if (files != null) {
                 for (File f : files) {
                     String name = f.getName().replace(".json", "");
-                    addLessonButton(vBox, name, f.getPath());
+                    addLessonButton(vBox, name, new File(f.getPath()));
                 }
             }
         }

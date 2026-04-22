@@ -17,6 +17,10 @@ public class WireManager {
         this.ghostWire = ghostWire;
     }
 
+    public void forceConnect(PinNode connectFrom, PinNode connectTo) {
+        generateWire(connectFrom, connectTo);
+    }
+
     public void handleRightClick(PinNode connectTo, Point2D local) {
         if (connectTo == null) {
             cancel();

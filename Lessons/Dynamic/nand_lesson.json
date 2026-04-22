@@ -1,0 +1,25 @@
+{
+  "title": "Hradlo NAND",
+  "content": [
+    "Hradlo NAND vznikne spojením hradla AND a hradla NOT (negovaný součin).",
+    "Výstup hradla NAND je logická 0 pouze v případě, že jsou oba vstupy logická 1.",
+    "Ve všech ostatních případech dává na výstup logickou 1.",
+    "Pravdivostní tabulka NAND:",
+    " A | B | VÝSTUP",
+    "---------------",
+    " 0 | 0 |   1   ",
+    " 1 | 0 |   1   ",
+    " 0 | 1 |   1   ",
+    " 1 | 1 |   0   "
+  ],
+  "simulationType": "NAND_GATE_DEMO",
+  "quiz": {
+    "question": "Kdy je na výstupu hradla NAND logická 0?",
+    "options": [
+      "Když jsou oba vstupy 0",
+      "Když je alespoň jeden vstup 1",
+      "Pouze když jsou oba vstupy 1"
+    ],
+    "correctOptionIndex": 2
+  }
+}
