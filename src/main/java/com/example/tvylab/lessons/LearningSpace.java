@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 
 public class LearningSpace {
@@ -38,18 +39,39 @@ public class LearningSpace {
         createTabsFromFolders(new File(settings.lessonsDir));
 
         // Bruteforce
-        addLessonButton(basicsBox, "Vstup a Výstup", new File("Lessons/Dynamic/basics_input.json"));
-        addLessonButton(basicsBox, "Signál", new File("Lessons/Dynamic/signal_lesson.json"));
-        addLessonButton(basicsBox, "Pravdivostní tabulka (AND)", new File("Lessons/Dynamic/and_lesson.json"));
-        addLessonButton(basicsBox, "Hradlo NOT", new File("Lessons/Dynamic/not_lesson.json"));
-        addLessonButton(basicsBox, "Hradlo Buffer", new File("Lessons/Dynamic/buffer_lesson.json"));
-        addLessonButton(basicsBox, "Hradlo NAND", new File("Lessons/Dynamic/nand_lesson.json"));
+        addInternalLessonButton(basicsBox, "Vstup a Výstup", "/com/example/tvylab/lessons/basics_input.json");
+        addInternalLessonButton(basicsBox, "Signál", "/com/example/tvylab/lessons/signal_lesson.json");
+        addInternalLessonButton(basicsBox, "Pravdivostní tabulka (AND)", "/com/example/tvylab/lessons/and_lesson.json");
+        addInternalLessonButton(basicsBox, "Hradlo NOT", "/com/example/tvylab/lessons/not_lesson.json");
+        addInternalLessonButton(basicsBox, "Hradlo Buffer", "/com/example/tvylab/lessons/buffer_lesson.json");
+        addInternalLessonButton(basicsBox, "Hradlo NAND", "/com/example/tvylab/lessons/nand_lesson.json");
     }
 
-    public void openLesson(File jsonFile) {
+    public void openInternalLesson(String lesson) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            LessonData lessonData = mapper.readValue(jsonFile, LessonData.class);
+            InputStream is = getClass().getResourceAsStream(lesson);
+            if (is == null) {
+                return;
+            }
+            LessonData lessonData = mapper.readValue(is, LessonData.class);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tvylab/lessons-builtin/base-lesson.fxml"));
+            Parent root = loader.load();
+
+            GenericLessonController controller = loader.getController();
+            controller.initLesson(lessonData);
+
+            Launcher.getPrimaryStage().getScene().setRoot(root);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openLesson(File jsonPath) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            LessonData lessonData = mapper.readValue(jsonPath, LessonData.class);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/tvylab/lessons-builtin/base-lesson.fxml"));
             Parent root = loader.load();
@@ -64,12 +86,17 @@ public class LearningSpace {
         }
     }
 
-    private void addLessonButton(VBox box, String name, File lesson) {
+    private void addLessonButton(VBox box, String name, String lesson) {
         Button btn = new Button(name);
         btn.setMaxWidth(Double.MAX_VALUE);
-        btn.setOnAction(e -> {
-            openLesson(lesson);
-        });
+        btn.setOnAction(e -> openLesson(new File(lesson)));
+        box.getChildren().add(btn);
+    }
+
+    private void addInternalLessonButton(VBox box, String name, String lesson) {
+        Button btn = new Button(name);
+        btn.setMaxWidth(Double.MAX_VALUE);
+        btn.setOnAction(e -> openInternalLesson(lesson));
         box.getChildren().add(btn);
     }
 
@@ -91,7 +118,7 @@ public class LearningSpace {
             if (files != null) {
                 for (File f : files) {
                     String name = f.getName().replace(".json", "");
-                    addLessonButton(vBox, name, new File(f.getPath()));
+                    addLessonButton(vBox, name, f.getPath());
                 }
             }
         }

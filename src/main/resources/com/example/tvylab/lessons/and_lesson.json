@@ -1,0 +1,23 @@
+{
+  "title": "Pravdivostní tabulka (AND)",
+  "content": [
+    "Pravdivostní tabulka zobrazuje všechny možné stavy vstupů a jejich výsledný výstup.",
+    "Hradlo AND (logický součin) dává na výstup 1 pouze tehdy, pokud jsou oba vstupy 1.",
+    "Tabulka pro AND:",
+    "A | B | Výstup",
+    "0 | 0 | 0",
+    "0 | 1 | 0",
+    "1 | 0 | 0",
+    "1 | 1 | 1"
+  ],
+  "simulationType": "AND_GATE_DEMO",
+  "quiz": {
+    "question": "Kdy bude mít hradlo AND na výstupu hodnotu 1?",
+    "options": [
+      "Když je alespoň jeden vstup 1",
+      "Pouze když jsou oba vstupy 1",
+      "Když jsou oba vstupy 0"
+    ],
+    "correctOptionIndex": 1
+  }
+}

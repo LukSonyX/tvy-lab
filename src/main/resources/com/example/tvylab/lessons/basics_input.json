@@ -1,0 +1,21 @@
+{
+  "title": "Co je to vstup/výstup?",
+  "content": [
+    "Vstup (input) je místo, odkud do logického obvodu přichází signál.",
+    "Výstup (output) je místo, které reaguje na vstup",
+    "Signál může mít dvě hodnoty: 0 (vypnuto) nebo 1 (zapnuto).",
+    "Klikni na vstup vpravo a sleduj změnu výstupu.",
+    "Levý klik = aktivace",
+    "Pravý klik = spojování"
+  ],
+  "simulationType": "Input",
+  "quiz": {
+    "question": "Co se stane, když nastavíš vstup na 1?",
+    "options": [
+      "Výstup bude 1",
+      "Nic se nestane",
+      "Výstup bude 0"
+    ],
+    "correctOptionIndex": 0
+  }
+}

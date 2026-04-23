@@ -1,0 +1,23 @@
+{
+  "title": "Hradlo NOT (Invertor)",
+  "content": [
+    "Hradlo NOT je nejjednodušší logický člen s jedním vstupem a jedním výstupem.",
+    "Jeho funkcí je logická negace – na výstupu je vždy opačný stav než na vstupu.",
+    "Pokud je na vstupu logická 1, hradlo ji 'překlopí' na 0 a naopak.",
+    "Pravdivostní tabulka hradla NOT:",
+    "VSTUP | VÝSTUP",
+    "--------------",
+    "  0   |   1   ",
+    "  1   |   0   "
+  ],
+  "simulationType": "NOT_BUFFER_DEMO",
+  "quiz": {
+    "question": "Co se stane se signálem po průchodu hradlem NOT?",
+    "options": [
+      "Zůstane stejný",
+      "Neguje se (překlopí se)",
+      "Vždy se změní na logickou 1"
+    ],
+    "correctOptionIndex": 1
+  }
+}

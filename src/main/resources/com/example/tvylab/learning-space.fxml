@@ -13,44 +13,35 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tvylab.lessons.LearningSpace">
    <top>
-      <StackPane prefHeight="10.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#onBackPressed" text="BACK" StackPane.alignment="CENTER_LEFT">
-               <StackPane.margin>
-                  <Insets bottom="10.0" left="10.0" top="10.0" />
-               </StackPane.margin>
-            </Button>
-            <Label text="Learning Space" StackPane.alignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="21.0" />
-               </font>
-               <StackPane.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </StackPane.margin>
-            </Label>
-         </children>
-      </StackPane>
+       <StackPane prefHeight="10.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+           <Button fx:id="backBtn" mnemonicParsing="false" onAction="#onBackPressed" text="BACK"
+                   StackPane.alignment="CENTER_LEFT">
+              <StackPane.margin>
+                  <Insets bottom="10.0" left="10.0" top="10.0"/>
+              </StackPane.margin>
+           </Button>
+           <Label text="Learning Space" StackPane.alignment="CENTER">
+              <font>
+                  <Font name="System Bold" size="21.0"/>
+              </font>
+              <StackPane.margin>
+                  <Insets bottom="10.0" top="10.0"/>
+              </StackPane.margin>
+           </Label>
+       </StackPane>
    </top>
     <center>
         <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
 
-            <tabs>
-
-                <Tab text="Basics">
-                    <content>
-                        <ScrollPane fitToWidth="true">
-                            <content>
-                                <VBox fx:id="basicsBox" spacing="10">
-                                    <padding>
-                                        <Insets />
-                                    </padding>
-                                </VBox>
-                            </content>
-                        </ScrollPane>
-                    </content>
-                </Tab>
-
-            </tabs>
+            <Tab text="Basics">
+                <ScrollPane fitToWidth="true">
+                    <VBox fx:id="basicsBox" spacing="10">
+                        <padding>
+                            <Insets/>
+                        </padding>
+                    </VBox>
+                </ScrollPane>
+            </Tab>
 
         </TabPane>
     </center>

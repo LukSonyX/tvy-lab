@@ -21,7 +21,7 @@ public class Launcher extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("main-menu.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 750, 500);
+        Scene scene = new Scene(root, 750, 650);
 
         Settings settings = SettingsManager.load();
 
@@ -47,5 +47,9 @@ public class Launcher extends Application {
         Parent pane = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource(fxml)));
         pane.setStyle("-fx-font-size: " + settings.fontSize + "px;");
         primaryStage.getScene().setRoot(pane);
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
