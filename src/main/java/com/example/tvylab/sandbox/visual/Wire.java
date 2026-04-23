@@ -3,8 +3,6 @@ package com.example.tvylab.sandbox.visual;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;
 
-import java.awt.*;
-
 public class Wire extends Line {
     private final PinNode connectedFrom;
     private final PinNode connectedTo;

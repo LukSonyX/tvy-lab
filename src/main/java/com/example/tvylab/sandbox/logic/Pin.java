@@ -4,90 +4,118 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Pin {
-    SimpleBooleanProperty isOn = new SimpleBooleanProperty(false);
-    ArrayList<Pin> connectedTo = new ArrayList<>();
-    private final boolean isInput;
+
+    private final BooleanProperty state = new SimpleBooleanProperty(false);
+    private final List<Pin> connections = new ArrayList<>();
+    private final PinType type;
     private Gate parentGate;
 
-    public Pin(boolean isInput) {
-        this.isInput = isInput;
+    public Pin(PinType type) {
+        this.type = type;
     }
 
     public void setParentGate(Gate parentGate) {
         this.parentGate = parentGate;
     }
 
+    public PinType getType() {
+        return type;
+    }
+
     public boolean isInput() {
-        return isInput;
+        return type == PinType.INPUT;
+    }
+
+    public boolean isOutput() {
+        return type == PinType.OUTPUT;
+    }
+
+    public boolean isSource() {
+        return type == PinType.SOURCE;
     }
 
     public void toggle() {
-        if (isInput) {
-            this.isOn.set(!this.isOn.get());
-
-            for (Pin connected : connectedTo) {
-                connected.setState(this.isOn.get());
-            }
+        if (type == PinType.SOURCE) {
+            setState(!getState());
         }
     }
 
-    public boolean connectTo(Pin pin) {
-        if (this == pin) return false;
-        if (this.parentGate == pin.parentGate) return false;
-        if (this.isInput == pin.isInput) return false;
+    public boolean connectTo(Pin other) {
+        if (this == other) return false;
+        if (this.parentGate == other.parentGate) return false;
 
+        Pin from;
+        Pin to;
 
-        if (!this.connectedTo.contains(pin)) {
-            this.connectedTo.add(pin);
-        }
-        if (!pin.connectedTo.contains(this)) {
-            pin.connectedTo.add(this);
+        if ((this.isOutput() || this.isSource()) && other.isInput()) {
+            from = this;
+            to = other;
+        } else if ((other.isOutput() || other.isSource()) && this.isInput()) {
+            from = other;
+            to = this;
+        } else {
+            return false;
         }
 
-        if (this.getState()) {
-            pin.setState(true);
-        } else if (pin.getState()) {
-            this.setState(true);
+        if (!from.connections.contains(to)) {
+            from.connections.add(to);
         }
+        if (!to.connections.contains(from)) {
+            to.connections.add(from);
+        }
+        to.receiveState(from.getState());
         return true;
     }
 
-    public void disconnectFrom(Pin pin) {
-        if (this.connectedTo.contains(pin)) {
-            pin.isOn.set(false);
-            pin.connectedTo.remove(this);
-            connectedTo.remove(pin);
+    public void disconnectFrom(Pin other) {
+        connections.remove(other);
+        other.connections.remove(this);
+
+        if (other.isInput()) {
+            other.receiveState(false);
         }
     }
 
     public void disconnectAll() {
-        for (Pin pin : new ArrayList<>(connectedTo)) {
+        for (Pin pin : new ArrayList<>(connections)) {
             disconnectFrom(pin);
         }
     }
 
-    public BooleanProperty isOnProperty() {
-        return this.isOn;
+    public BooleanProperty stateProperty() {
+        return state;
     }
 
     public boolean getState() {
-        return this.isOn.get();
+        return state.get();
     }
 
-    public void setState(boolean state) {
-        if (this.isOn.get() == state) return;
-        if (this.isOn.get() != state) {
-            this.isOn.set(state);
+    public void setState(boolean newState) {
+        if (state.get() == newState) return;
 
-            for (Pin pin : connectedTo) {
-                pin.setState(state);
+        state.set(newState);
+
+        if (isOutput() || isSource()) {
+            for (Pin pin : connections) {
+                if (pin.isInput()) {
+                    pin.receiveState(newState);
+                }
             }
         }
     }
 
-    public Gate getParentGate() {
-        return parentGate;
+    private void receiveState(boolean newState) {
+        if (!isInput()) return;
+
+        if (state.get() == newState) return;
+
+        state.set(newState);
+
+        if (parentGate != null) {
+            parentGate.onInputChanged();
+        }
     }
 }

@@ -4,50 +4,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane dividerPositions="0.25" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tvylab.sandbox.SandboxSpace">
+<SplitPane dividerPositions="0.25" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.tvylab.sandbox.SandboxSpace">
 
-    <items>
-        <!-- LEFT PANEL -->
-        <VBox fx:id="menuBox" maxWidth="-Infinity" minWidth="0.0" prefWidth="250.0" spacing="10.0">
+    <VBox fx:id="menuBox" maxWidth="-Infinity" minWidth="0.0" prefWidth="250.0" spacing="10.0">
 
-            <children>
-                <!-- BACK BUTTON -->
-                <Button fx:id="backBtn" maxWidth="1.7976931348623157E308" minHeight="40.0" onAction="#onBackPressed" text="BACK" />
+        <Button fx:id="backBtn" maxWidth="1.7976931348623157E308" minHeight="40.0" onAction="#onBackPressed"
+                text="BACK"/>
 
-                <!-- SCROLLABLE AREA -->
-                <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
 
-                    <content>
-                        <VBox fx:id="gateSpace" maxWidth="1.7976931348623157E308" spacing="8.0">
+            <VBox fx:id="gateSpace" maxWidth="1.7976931348623157E308" spacing="8.0">
 
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </padding>
 
-                            <children>
-                                <ComboBox fx:id="gates" maxWidth="1.7976931348623157E308" promptText="GATES" />
+                <ComboBox fx:id="pins" maxWidth="1.7976931348623157E308" promptText="IO"/>
+                <ComboBox fx:id="gates" maxWidth="1.7976931348623157E308" promptText="GATES"/>
+                <ComboBox fx:id="complexGates" maxWidth="1.7976931348623157E308" promptText="COMPLEX"/>
+            </VBox>
+        </ScrollPane>
 
-                                <ComboBox fx:id="pins" maxWidth="1.7976931348623157E308" promptText="IO" />
-                            </children>
+        <CheckBox fx:id="deleteToggle" text="Delete">
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+        </CheckBox>
 
-                        </VBox>
-                    </content>
-                </ScrollPane>
+        <Button fx:id="saveBtn" maxWidth="1.7976931348623157E308" minHeight="40.0" onAction="#onSavePressed"
+                text="SAVE"/>
+    </VBox>
 
-                <!-- DELETE CHECKBOX -->
-                <CheckBox fx:id="deleteToggle" text="Delete">
-                    <padding>
-                        <Insets left="10.0" />
-                    </padding>
-                </CheckBox>
+    <Pane fx:id="sandboxPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"/>
 
-                <!-- SAVE BUTTON -->
-                <Button fx:id="saveBtn" maxWidth="1.7976931348623157E308" minHeight="40.0" onAction="#onSavePressed" text="SAVE" />
-            </children>
-        </VBox>
-
-        <!-- RIGHT PANEL -->
-        <Pane fx:id="sandboxPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-
-    </items>
 </SplitPane>

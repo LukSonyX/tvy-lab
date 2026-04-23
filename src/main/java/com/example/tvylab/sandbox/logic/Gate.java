@@ -4,21 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Gate {
-    public String name;
-    protected ArrayList<Pin> inputPins = new ArrayList<>();
-    protected ArrayList<Pin> outputPins = new ArrayList<>();
+
+    protected String name;
+    protected List<Pin> inputPins = new ArrayList<>();
+    protected List<Pin> outputPins = new ArrayList<>();
 
     public Gate() {
     }
 
     protected void setupPins(int inCount, int outCount) {
+        inputPins.clear();
+        outputPins.clear();
+
         for (int i = 0; i < inCount; i++) {
-            Pin p = new Pin(false);
+            Pin p = new Pin(PinType.INPUT);
             p.setParentGate(this);
             inputPins.add(p);
         }
+
         for (int i = 0; i < outCount; i++) {
-            Pin p = new Pin(true);
+            Pin p = new Pin(PinType.OUTPUT);
             p.setParentGate(this);
             outputPins.add(p);
         }
@@ -26,10 +31,27 @@ public abstract class Gate {
 
     protected abstract void compute();
 
+    public void onInputChanged() {
+        compute();
+    }
+
     public void update() {
         compute();
     }
 
-    public List<Pin> getOutputPins() { return outputPins; }
-    public List<Pin> getInputPins() { return inputPins; }
+    public List<Pin> getOutputPins() {
+        return outputPins;
+    }
+
+    public List<Pin> getInputPins() {
+        return inputPins;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

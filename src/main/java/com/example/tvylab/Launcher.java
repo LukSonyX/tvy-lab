@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class Launcher extends Application {
         String css = Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm();
         scene.getStylesheets().add(css);
 
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("logo.png"))));
         stage.setMinWidth(600);
         stage.setMinHeight(650);
         stage.setTitle("tvylab");

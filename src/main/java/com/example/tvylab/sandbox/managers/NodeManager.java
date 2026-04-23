@@ -1,10 +1,7 @@
 package com.example.tvylab.sandbox.managers;
 
 import com.example.tvylab.sandbox.logic.Pin;
-import com.example.tvylab.sandbox.visual.GateNode;
-import com.example.tvylab.sandbox.visual.LogicItem;
-import com.example.tvylab.sandbox.visual.PinNode;
-import com.example.tvylab.sandbox.visual.Wire;
+import com.example.tvylab.sandbox.visual.*;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -71,16 +68,28 @@ public class NodeManager {
         if (toDelete instanceof GateNode gate) {
             for (Pin pin : gate.getLogic().getInputPins()) pin.disconnectAll();
             for (Pin pin : gate.getLogic().getOutputPins()) pin.disconnectAll();
-            for (Node node : new ArrayList<>(zoomGroup.getChildren())) {
-                if (node instanceof Wire wire) {
-                    if (wire.getConnectedFrom().getParent() == gate ||
-                            wire.getConnectedTo().getParent() == gate) {
-                        wire.disconnect();
-                        zoomGroup.getChildren().remove(wire);
-                    }
+            removeConnections(gate);
+            zoomGroup.getChildren().remove(gate);
+        }
+        if (toDelete instanceof SevenSegmentNode segmentDisplay) {
+            for (Pin pin : segmentDisplay.getLogic().getInputPins()) {
+                pin.disconnectAll();
+            }
+            removeConnections(segmentDisplay);
+            zoomGroup.getChildren().remove(segmentDisplay);
+        }
+    }
+
+    private void removeConnections(Node item) {
+        for (Node node : new ArrayList<>(zoomGroup.getChildren())) {
+            if (node instanceof Wire wire) {
+                if (wire.getConnectedFrom().getParent() == item ||
+                        wire.getConnectedTo().getParent() == item) {
+
+                    wire.disconnect();
+                    zoomGroup.getChildren().remove(wire);
                 }
             }
-            zoomGroup.getChildren().remove(gate);
         }
     }
 }

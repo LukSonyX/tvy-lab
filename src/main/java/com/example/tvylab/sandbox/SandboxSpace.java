@@ -6,6 +6,7 @@ import com.example.tvylab.sandbox.managers.InteractionManager;
 import com.example.tvylab.sandbox.managers.NodeManager;
 import com.example.tvylab.sandbox.managers.SandboxGateManager;
 import com.example.tvylab.sandbox.managers.WireManager;
+import com.example.tvylab.sandbox.visual.SevenSegmentNode;
 import com.example.tvylab.settings.Settings;
 import com.example.tvylab.sandbox.logic.*;
 import com.example.tvylab.sandbox.visual.GateNode;
@@ -50,6 +51,7 @@ public class SandboxSpace {
     private ComboBox<String> pins;
     @FXML
     private ComboBox<String> gates;
+    @FXML private ComboBox<String> complexGates;
     @FXML
     private VBox menuBox;
     @FXML
@@ -84,7 +86,7 @@ public class SandboxSpace {
             }
         });
         pins.setPromptText("IO");
-        pins.getItems().addAll("1-" + LanguageChanger.get("input"), "1-" + LanguageChanger.get("output"));
+        pins.getItems().addAll("1-" + LanguageChanger.get("input"), "1-" + LanguageChanger.get("output"), "7-SEGMENT");
         pins.setOnAction(e -> onComboboxSelect(pins));
 
         gates.setButtonCell(new ListCell<>() {
@@ -95,8 +97,19 @@ public class SandboxSpace {
             }
         });
         gates.setPromptText(LanguageChanger.get("gates"));
-        gates.getItems().addAll("NAND", "AND", "NOT", "BUFFER");
+        gates.getItems().addAll("AND", "NAND", "OR", "XOR", "NOT", "BUFFER");
         gates.setOnAction(e -> onComboboxSelect(gates));
+
+        complexGates.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText("COMPLEX");
+            }
+        });
+        complexGates.setPromptText("COMPLEX");
+        complexGates.getItems().addAll("Half Adder", "Mux");
+        complexGates.setOnAction(e -> onComboboxSelect(complexGates));
 
         ghostWire.setVisible(false);
         ghostWire.setStroke(Paint.valueOf("red"));
@@ -132,6 +145,23 @@ public class SandboxSpace {
         Optional<Pair<String, String>> input = showSaveDialog();
         if (input.isEmpty()) return;
 
+        boolean containsDisplay = false;
+        for (Node node : zoomGroup.getChildren()) {
+            if (node instanceof SevenSegmentNode) {
+                containsDisplay = true;
+                break;
+            }
+        }
+
+        if (containsDisplay) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle(LanguageChanger.get("display_save_warning_title"));
+            alert.setHeaderText(LanguageChanger.get("display_save_warning_header"));
+            alert.setContentText(LanguageChanger.get("display_save_warning_content"));
+            alert.showAndWait();
+            return;
+        }
+
         String gateName = input.get().getKey();
         String category = input.get().getValue();
 
@@ -150,12 +180,17 @@ public class SandboxSpace {
         if (selection.equals("1-Výstup")) selection = "1-Output";
 
         nodeManager.setSelected(switch (selection) {
-            case "1-Input"  -> new PinNode(new Pin(true), LanguageChanger.get("input"), pinCount++);
-            case "1-Output" -> new PinNode(new Pin(false), LanguageChanger.get("output"), pinCount++);
-            case "NAND" -> new GateNode(new NandGate());
+            case "1-Input"  -> new PinNode(new Pin(PinType.SOURCE), LanguageChanger.get("input"), pinCount++);
+            case "1-Output" -> new PinNode(new Pin(PinType.INPUT), LanguageChanger.get("output"), pinCount++);
             case "AND" -> new GateNode(new AndGate());
+            case "OR" -> new GateNode(new OrGate());
+            case "XOR" -> new GateNode(new XorGate());
+            case "NAND" -> new GateNode(new NandGate());
             case "NOT" -> new GateNode(new NotGate());
             case "BUFFER" -> new GateNode(new BufferGate());
+            case "Half Adder" -> new GateNode(new HalfAdderGate());
+            case "Mux" -> new GateNode(new MuxGate());
+            case "7-SEGMENT" -> new SevenSegmentNode(new SevenSegmentLogic());
             default -> null;
         });
 
@@ -297,7 +332,7 @@ public class SandboxSpace {
     }
 
     private void showRenameDialog(GateNode gate) {
-        TextInputDialog dialog = new TextInputDialog(gate.getLogic().name);
+        TextInputDialog dialog = new TextInputDialog(gate.getLogic().getName());
         dialog.setTitle(LanguageChanger.get("rename"));
         dialog.setHeaderText(LanguageChanger.get("rename_gate"));
         dialog.setContentText(LanguageChanger.get("name") + ":");

@@ -30,7 +30,9 @@ public class LanguageChanger {
             Map.entry("language", "Jazyk:"),
             Map.entry("current_language", "Čeština"),
             Map.entry("basics", "Základy"),
-            Map.entry("", "")
+            Map.entry("display_save_warning_title", "Upozornění při ukládání"),
+            Map.entry("display_save_warning_header", "7-segmentový displej nelze uložit"),
+            Map.entry("display_save_warning_content", "V této verzi aplikace lze ukládat pouze logická hradla. Displej prosím před uložením odstraňte nebo jej používejte jen jako koncový prvek na ploše.")
     );
 
     public static Map<String, String> english_table = Map.ofEntries(
@@ -64,7 +66,10 @@ public class LanguageChanger {
             Map.entry("folder_deletion_error", "Error: Folder deletion"),
             Map.entry("folder_deletion_error_context", "Couldn't delete folder!"),
             Map.entry("file_deletion_error", "Error: File deletion"),
-            Map.entry("file_deletion_error_context", "Couldn't delete file!")
+            Map.entry("file_deletion_error_context", "Couldn't delete file!"),
+            Map.entry("display_save_warning_title", "Save Warning"),
+            Map.entry("display_save_warning_header", "Cannot save 7-segment display"),
+            Map.entry("display_save_warning_content", "In this version, only logic gates can be saved. Please remove the display before saving or use it only as a final element on the workspace.")
     );
 
     public static String get(String key) {

@@ -13,31 +13,33 @@ import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 
-
 public class PinNode extends Pane implements LogicItem {
-    Pin logic;
+
+    private final Pin logic;
     private final ArrayList<Wire> wires = new ArrayList<>();
-    Circle texture = new Circle(10, Paint.valueOf("black"));
-    String name;
-    Label nameLabel;
+    private final Circle texture = new Circle(10);
+    private final Label nameLabel;
     private final int order;
+    private final String name;
 
     public PinNode(Pin logic, String name, int order) {
-        this.getChildren().add(texture);
-        this.name = name;
         this.logic = logic;
+        this.name = name;
         this.order = order;
-        nameLabel = new Label(name);
-        setPickOnBounds(false);
-        this.setStyle("-fx-font-size: 14pt;");
+
+        texture.setFill(Paint.valueOf("black"));
 
         Circle hoverArea = new Circle(20);
         hoverArea.setFill(Color.TRANSPARENT);
 
+        nameLabel = new Label(name);
         nameLabel.setVisible(false);
+        nameLabel.layoutXProperty().bind(texture.radiusProperty().add(5));
         nameLabel.setLayoutY(-12);
-        nameLabel.setLayoutX(texture.getLayoutX() + nameLabel.getWidth() + 15);
         nameLabel.setTextFill(Paint.valueOf("white"));
+
+        setPickOnBounds(false);
+        setStyle("-fx-font-size: 14pt;");
 
         nameLabel.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
@@ -52,15 +54,17 @@ public class PinNode extends Pane implements LogicItem {
             }
         });
 
+        hoverProperty().addListener((obs, oldVal, hovering) ->
+                nameLabel.setVisible(hovering)
+        );
 
+        texture.fillProperty().bind(
+                Bindings.when(logic.stateProperty())
+                        .then(Paint.valueOf("#39ff14"))
+                        .otherwise(Paint.valueOf("black"))
+        );
 
-        hoverProperty().addListener((obs, oldVal, hovering) -> nameLabel.setVisible(hovering));
-
-        texture.fillProperty().bind(Bindings.when(logic.isOnProperty())
-                .then(Paint.valueOf("green"))
-                .otherwise(Paint.valueOf("black")));
-
-        getChildren().addAll(hoverArea, nameLabel);
+        getChildren().addAll(texture, hoverArea, nameLabel);
     }
 
     private void replace(Node oldNode, Node newNode) {
@@ -70,7 +74,7 @@ public class PinNode extends Pane implements LogicItem {
     }
 
     public Pin getLogic() {
-        return this.logic;
+        return logic;
     }
 
     public void setStroke(Paint paint) {
@@ -83,7 +87,7 @@ public class PinNode extends Pane implements LogicItem {
 
     @Override
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setStrokeWidth(int i) {
@@ -97,9 +101,6 @@ public class PinNode extends Pane implements LogicItem {
     public void addWire(Wire wire) {
         if (!wires.contains(wire)) {
             wires.add(wire);
-            if (logic.getParentGate() != null) {
-                logic.getParentGate().update();
-            }
         }
     }
 
@@ -112,8 +113,16 @@ public class PinNode extends Pane implements LogicItem {
     }
 
     public void setSide(boolean isLeft) {
+        nameLabel.layoutXProperty().unbind();
+
         if (isLeft) {
-            nameLabel.layoutXProperty().bind(nameLabel.widthProperty().multiply(-1).subtract(15));
+            nameLabel.layoutXProperty().bind(
+                    nameLabel.widthProperty().multiply(-1).subtract(texture.radiusProperty()).subtract(5)
+            );
+        } else {
+            nameLabel.layoutXProperty().bind(
+                    texture.radiusProperty().add(5)
+            );
         }
     }
 

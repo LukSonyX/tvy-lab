@@ -24,22 +24,17 @@ public class SandboxGateManager {
         this.settings = settings;
     }
 
-    public void updateAllGates() {
-        for (Node node : zoomGroup.getChildren()) {
-            if (node instanceof GateNode gateNode) {
-                gateNode.getLogic().update();
-            }
-        }
-    }
-
     public GateDefinition createDefinition(String gateName) {
         List<PinNode> inputs = new ArrayList<>();
         List<PinNode> outputs = new ArrayList<>();
 
         for (Node node : zoomGroup.getChildren()) {
             if (node instanceof PinNode pin) {
-                if (pin.getLogic().isInput()) inputs.add(pin);
-                else outputs.add(pin);
+                switch (pin.getLogic().getType()) {
+                    case SOURCE -> inputs.add(pin);
+                    case INPUT -> outputs.add(pin);
+                    default -> {}
+                }
             }
         }
 
@@ -50,15 +45,24 @@ public class SandboxGateManager {
         Map<String, List<Boolean>> table = new HashMap<>();
 
         for (int i = 0; i < (1 << inputCount); i++) {
+
+            for (PinNode in : inputs) {
+                in.getLogic().setState(false);
+            }
+
             StringBuilder key = new StringBuilder();
+
             for (int j = 0; j < inputCount; j++) {
                 boolean value = (i & (1 << (inputCount - 1 - j))) != 0;
                 inputs.get(j).getLogic().setState(value);
                 key.append(value ? "1" : "0");
             }
-            for (int k = 0; k < 5; k++) updateAllGates();
+
             List<Boolean> row = new ArrayList<>();
-            for (PinNode out : outputs) row.add(out.getLogic().getState());
+            for (PinNode out : outputs) {
+                row.add(out.getLogic().getState());
+            }
+
             table.put(key.toString(), row);
         }
 

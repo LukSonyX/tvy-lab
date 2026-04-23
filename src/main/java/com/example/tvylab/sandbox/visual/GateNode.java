@@ -19,7 +19,7 @@ public class GateNode extends Pane implements LogicItem {
 
     public GateNode(Gate logic) {
         this.logic = logic;
-        this.name = logic.name;
+        this.name = logic.getName();
 
         setPickOnBounds(false);
         this.setStyle("-fx-font-size: 14pt;");
@@ -79,7 +79,7 @@ public class GateNode extends Pane implements LogicItem {
 
     public void setName(String newName) {
         this.name = newName;
-        this.logic.name = newName;
+        this.logic.setName(newName);
         this.label.setText(name);
     }
 
